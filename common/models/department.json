@@ -1,0 +1,29 @@
+{
+  "name": "department",
+  "plural": "departments",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "officers": {
+      "type": "hasMany",
+      "model": "officer",
+      "foreignKey": "departmentId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

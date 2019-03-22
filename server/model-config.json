@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "department": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "bike": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "officer": {
+    "dataSource": "mysql",
+    "public": true
+  }
+}

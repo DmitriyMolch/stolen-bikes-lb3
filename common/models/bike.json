@@ -1,0 +1,54 @@
+{
+  "name": "bike",
+  "plural": "bikes",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "license": {
+      "type": "string",
+      "required": true
+    },
+    "color": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "owner": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "found": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "department": {
+      "type": "belongsTo",
+      "model": "department",
+      "foreignKey": "departmentId"
+    },
+    "officer": {
+      "type": "belongsTo",
+      "model": "officer",
+      "foreignKey": "officerId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
