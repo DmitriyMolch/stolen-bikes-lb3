@@ -19,6 +19,5 @@ module.exports = async function(app) {
       officers.splice(index, 1);
     });
     await Promise.all(promises);
-    console.log('Bikes processed');
   }, 1000);
 };
