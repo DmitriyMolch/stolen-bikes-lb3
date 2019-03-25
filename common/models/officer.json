@@ -13,7 +13,14 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "bike": {
+      "type": "hasOne",
+      "model": "bike",
+      "foreignKey": "officerId",
+      "primaryKey": "id"
+    }
+  },
   "acls": [],
   "methods": {}
 }
