@@ -1,4 +1,5 @@
 'use strict';
+const data = require('./data');
 
 module.exports = function(app) {
   return {
@@ -10,15 +11,29 @@ module.exports = function(app) {
       ]);
     },
 
-    createOfficerAndDepartment: async() => {
-      const department = await app.models.department.create({
-        name: 'Bikes Search',
-      });
-      const officer = await app.models.officer.create({
-        name: 'John Smith',
-        departmentId: department.id,
-      });
+    givenDepartmentOfficer: async() => {
+      const department =
+        convert(await app.models.department.create(data.department));
+      const officer =
+        convert(await app.models.officer.create(data.officer));
       return {officer, department};
+    },
+
+    givenBike: async() => {
+      const bike = convert(await app.models.bike.create(data.bike));
+      return {bike};
+    },
+
+    givenDepartmentBike: async() => {
+      const department =
+        convert(await app.models.department.create(data.department));
+      const bike = convert(await app.models.bike.create({
+        ...data.bike,
+        departmentId: department.id,
+      }));
+      return {department, bike};
     },
   };
 };
+
+const convert = (lbModel) => JSON.parse(JSON.stringify(lbModel));

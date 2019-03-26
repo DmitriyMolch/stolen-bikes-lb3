@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "start": "node $NODE_DEBUG_OPTION .",
     "posttest": "npm run lint",
-    "test": "mocha server/test --recursive --exit"
+    "test": "mocha server/test --recursive --exit",
+    "test:coverage": "nyc npm run test"
   },
   "dependencies": {
     "compression": "^1.0.3",
@@ -28,6 +29,7 @@
     "eslint": "^5.15.3",
     "eslint-config-loopback": "^8.0.0",
     "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
     "supertest": "^4.0.2"
   },
   "repository": {
