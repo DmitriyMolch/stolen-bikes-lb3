@@ -15,7 +15,10 @@ module.exports = function(app) {
       const department =
         convert(await app.models.department.create(data.department));
       const officer =
-        convert(await app.models.officer.create(data.officer));
+        convert(await app.models.officer.create({
+          ...data.officer,
+          departmentId: department.id,
+        }));
       return {officer, department};
     },
 
@@ -32,6 +35,12 @@ module.exports = function(app) {
         departmentId: department.id,
       }));
       return {department, bike};
+    },
+
+    givenDepartment: async() => {
+      const department =
+        convert(await app.models.department.create(data.department));
+      return {department};
     },
   };
 };

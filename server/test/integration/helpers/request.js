@@ -6,6 +6,12 @@ module.exports = function(server) {
     createBike: (bike) => request(server).post('/api/bikes').send(bike),
     findBikes: (filter) =>
       request(server).get(`/api/bikes?${getFilter(filter)}`),
+    findDepartmentByBikeId: (bikeId) =>
+      request(server).get(`/api/bikes/${bikeId}/department`),
+    createDepartment: (department) =>
+      request(server).post('/api/departments').send(department),
+    createOfficer: (officer) =>
+      request(server).post('/api/officers').send(officer),
   };
 };
 

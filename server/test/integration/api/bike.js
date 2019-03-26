@@ -2,9 +2,10 @@
 
 const {expect} = require('chai');
 const server = require('../../../server');
-const {cleanDatabase, givenDepartmentOfficer, givenBike} =
-  require('../helpers/database')(server);
-const {createBike, findBikes} = require('../helpers/request')(server);
+const {cleanDatabase, givenDepartmentOfficer, givenBike, givenDepartmentBike}
+  = require('../helpers/database')(server);
+const {createBike, findBikes, findDepartmentByBikeId} =
+  require('../helpers/request')(server);
 let given;
 const data = require('../helpers/data');
 
@@ -84,5 +85,26 @@ describe('Bike', () => {
       const res = await findBikes({color: 'wrong'}).expect(200);
       expect(res.body).has.length(0);
     });
+  });
+
+  describe('find department by bike', () => {
+    let given = {};
+    before(async() => {
+      await cleanDatabase();
+      given = await givenDepartmentBike();
+    });
+
+    it('finds department by bike', async() => {
+      const res = await findDepartmentByBikeId(given.bike.id).expect(200);
+      expect(res.body).is.eql(given.department);
+    });
+
+    it('returns error trying to find department with wrong bike.id',
+      async() => {
+        const res = await findDepartmentByBikeId('wrong').expect(404);
+        const error = res.body.error;
+        expect(error.name).is.eql('Error');
+        expect(error.message).is.eql('could not find a model with id wrong');
+      });
   });
 });
