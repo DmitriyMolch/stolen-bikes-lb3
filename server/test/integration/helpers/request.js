@@ -6,6 +6,8 @@ module.exports = function(server) {
     createBike: (bike) => request(server).post('/api/bikes').send(bike),
     findBikes: (filter) =>
       request(server).get(`/api/bikes?${getFilter(filter)}`),
+    updateBike: (id, fields) =>
+      request(server).patch(`/api/bikes/${id}`).send(fields),
     findDepartmentByBikeId: (bikeId) =>
       request(server).get(`/api/bikes/${bikeId}/department`),
     createDepartment: (department) =>
