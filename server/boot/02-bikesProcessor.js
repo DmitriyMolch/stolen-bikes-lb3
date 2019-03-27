@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = async function(app) {
+  const {checkInterval} = app.get('bikesProcessor');
   setInterval(async() => {
     const bikes = await app.models.bike.find({
       where: {officerId: {eq: null}},
@@ -19,5 +20,5 @@ module.exports = async function(app) {
       officers.splice(index, 1);
     });
     await Promise.all(promises);
-  }, 1000);
+  }, checkInterval);
 };

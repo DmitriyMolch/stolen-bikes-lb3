@@ -2,8 +2,8 @@
 
 const {expect} = require('chai');
 const server = require('../../../server');
-const {cleanDatabase, givenDepartmentOfficer, givenBike, givenDepartmentBike}
-  = require('../helpers/database')(server);
+const {cleanDatabase, givenDepartmentOfficer, givenBike, givenDepartmentBike} =
+  require('../helpers/database')(server);
 const {createBike, findBikes, findDepartmentByBikeId} =
   require('../helpers/request')(server);
 let given;
@@ -83,6 +83,27 @@ describe('Bike', () => {
 
     it('finds no bike by wrong color', async() => {
       const res = await findBikes({color: 'wrong'}).expect(200);
+      expect(res.body).has.length(0);
+    });
+
+    it('finds bike by color and type', async() => {
+      const res = await findBikes({
+        color: given.bike.color,
+        type: given.bike.type,
+      }).expect(200);
+      const expected = [{
+        ...given.bike,
+        officerId: null,
+        departmentId: null,
+      }];
+      expect(res.body).is.eql(expected);
+    });
+
+    it('finds no bike by correct color and wrong type', async() => {
+      const res = await findBikes({
+        color: given.bike.color,
+        type: 'wrong',
+      }).expect(200);
       expect(res.body).has.length(0);
     });
   });

@@ -2,35 +2,35 @@
 const data = require('./data');
 
 module.exports = function(app) {
+  const models = app.models;
   return {
     cleanDatabase: async() => {
       await Promise.all([
-        app.models.officer.destroyAll(),
-        app.models.bike.destroyAll(),
-        app.models.department.destroyAll(),
+        models.officer.destroyAll(),
+        models.bike.destroyAll(),
+        models.department.destroyAll(),
       ]);
     },
 
     givenDepartmentOfficer: async() => {
       const department =
-        convert(await app.models.department.create(data.department));
-      const officer =
-        convert(await app.models.officer.create({
-          ...data.officer,
-          departmentId: department.id,
-        }));
+        convert(await models.department.create(data.department));
+      const officer = convert(await models.officer.create({
+        ...data.officer,
+        departmentId: department.id,
+      }));
       return {officer, department};
     },
 
     givenBike: async() => {
-      const bike = convert(await app.models.bike.create(data.bike));
+      const bike = convert(await models.bike.create(data.bike));
       return {bike};
     },
 
     givenDepartmentBike: async() => {
       const department =
-        convert(await app.models.department.create(data.department));
-      const bike = convert(await app.models.bike.create({
+        convert(await models.department.create(data.department));
+      const bike = convert(await models.bike.create({
         ...data.bike,
         departmentId: department.id,
       }));
@@ -39,8 +39,23 @@ module.exports = function(app) {
 
     givenDepartment: async() => {
       const department =
-        convert(await app.models.department.create(data.department));
+        convert(await models.department.create(data.department));
       return {department};
+    },
+
+    noFreeOfficers: async() => {
+      const department =
+        convert(await models.department.create(data.department));
+      const officer = convert(await models.officer.create({
+        ...data.officer,
+        departmentId: department.id,
+      }));
+      const bike = convert(await models.bike.create({
+        ...data.bike,
+        departmentId: department.id,
+        officerId: officer.id,
+      }));
+      return {officer, department, bike};
     },
   };
 };

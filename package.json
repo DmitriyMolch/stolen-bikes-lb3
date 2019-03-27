@@ -37,5 +37,8 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "stolen-bikes-lb3"
+  "description": "stolen-bikes-lb3",
+  "nyc": {
+    "exclude": "server/server.js"
+  }
 }
