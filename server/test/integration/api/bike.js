@@ -4,7 +4,7 @@ const {expect} = require('chai');
 const server = require('../../../server');
 const {cleanDatabase, givenDepartmentOfficer, givenBike, givenDepartmentBike} =
   require('../helpers/database')(server);
-const {createBike, findBikes, findDepartmentByBikeId} =
+const {createBike, findBikes, updateBike, findDepartmentByBikeId} =
   require('../helpers/request')(server);
 let given;
 const data = require('../helpers/data');
@@ -124,8 +124,31 @@ describe('Bike', () => {
       async() => {
         const res = await findDepartmentByBikeId('wrong').expect(404);
         const error = res.body.error;
-        expect(error.name).is.eql('Error');
+        expect(error.code).is.eql('MODEL_NOT_FOUND');
         expect(error.message).is.eql('could not find a model with id wrong');
       });
+  });
+
+  describe('update', () => {
+    beforeEach(cleanDatabase);
+    beforeEach(async() => {
+      given = await givenBike();
+    });
+
+    it('updates bike', async() => {
+      const res = await updateBike(given.bike.id, {found: true}).expect(200);
+      const expected = {
+        ...data.bike,
+        id: res.body.id,
+        found: true,
+        officerId: null,
+        departmentId: null,
+      };
+      expect(res.body).is.eql(expected);
+    });
+
+    it('returns error trying to update bike with missing field', async() => {
+      await updateBike(given.bike.id, {missing: true}).expect(500);
+    });
   });
 });
