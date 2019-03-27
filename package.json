@@ -8,12 +8,15 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node $NODE_DEBUG_OPTION .",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint",
+    "test": "mocha server/test --recursive --exit",
+    "test:coverage": "nyc npm run test"
   },
   "dependencies": {
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "helmet": "^3.16.0",
+    "http-errors": "^1.7.2",
     "loopback": "^3.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^6.2.0",
@@ -22,13 +25,20 @@
     "strong-error-handler": "^3.0.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^5.15.3",
-    "eslint-config-loopback": "^8.0.0"
+    "eslint-config-loopback": "^8.0.0",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "supertest": "^4.0.2"
   },
   "repository": {
     "type": "",
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "stolen-bikes-lb3"
+  "description": "stolen-bikes-lb3",
+  "nyc": {
+    "exclude": "server/server.js"
+  }
 }
